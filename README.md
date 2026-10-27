@@ -1,102 +1,105 @@
-# 老官网静态化改造
+# Legacy Website to Static
 
-简体中文 | [English](README.en.md)
+English | [简体中文](README.zh-CN.md)
 
-`legacy-site-to-static` 是一份面向 AI Agent 的 Skill，用于把老旧企业展示站、产品目录站从 PHP、ASP 或旧 CMS 迁移成可维护的静态官网。
+`legacy-site-to-static` is a Skill for AI Agents that helps migrate aging corporate websites and product catalogs from PHP, ASP, or an older CMS to maintainable static websites.
 
-它把一次真实改造中用到的资料恢复、本地编辑、多语言、FTP 发布、入口切换和回退方法整理成工作流程，并附带三个只读检查工具。适合希望保留原有内容、风格和可用主机的项目。
+It brings together content recovery, local editing, multilingual content, FTP publishing, traffic routing, and rollback procedures from a real migration. It includes three read-only checking tools and suits projects that want to retain their existing content, visual style, and usable hosting.
 
-**管理工具、翻译接入和 FTP 发布器需要由 Agent 按当前项目实现。仓库提供工作流程和检查脚本，不包含通用可安装后台。**
+**The Agent must implement any editor, translation integration, or FTP publisher for the specific project. This repository provides a workflow and checking scripts, rather than a ready-to-install universal admin application.**
 
-核心流程和检查脚本不依赖特定大模型 API。Agent 需要能够读取本地文件、按需运行脚本；自动发现、安装目录和调用语法由所用 Agent 工具决定。
+The core workflow and scripts do not depend on a particular model API. The Agent needs access to local files and the ability to run scripts when needed. Skill discovery, installation directories, and invocation syntax depend on the Agent tool you use.
 
-## 安装和使用
+## Installation and usage
 
-下载仓库，或克隆到本地：
+Download the repository or clone it locally:
 
 ```bash
 git clone https://github.com/reinmj/skills.git
 ```
 
-如果 Agent 支持导入 Skill，将完整的 `skills/legacy-site-to-static` 文件夹导入其支持的目录，保留内部文件结构。具体安装方式以该 Agent 工具的说明为准。
+If your Agent supports importing Skills, import the entire `skills/legacy-site-to-static` folder into a supported location, preserving its internal structure. Follow your Agent tool's installation instructions.
 
-也可以直接让 Agent 读取本地 `SKILL.md`。以下路径需替换为实际绝对路径：
+You can also ask the Agent to read the local `SKILL.md` directly. Replace the path below with its actual absolute path:
 
 ```text
-请读取 /path/to/skills/skills/legacy-site-to-static/SKILL.md，
-并按其中的流程改造这个老官网。
-源码在【源码位置】，数据库备份在【SQL 或压缩包位置】，
-图片和网页备份在【备份位置】。
-先只读评估，列出内容完整性、动态功能和部署链路，
-再制作本地可核对的静态版本，保留现有内容和风格。
+Read /path/to/skills/skills/legacy-site-to-static/SKILL.md
+and follow its workflow to migrate this legacy website.
+Source code: [source location].
+Database backup: [SQL file or archive location].
+Images and web files: [backup location].
+Start with a read-only assessment of content completeness,
+dynamic features, and the deployment chain.
+Then build a locally reviewable static version,
+preserving the existing content and visual style.
 ```
 
-已有同名 Skill 时先核对版本，避免重复安装。远程上传和正式入口切换应遵循当前项目的授权范围。
+Check for an existing Skill with the same name before installing another copy. Remote uploads and production routing changes must stay within the current project's authorization.
 
-## 适用范围
+## Suitable projects
 
-适合公司介绍、产品展示、新闻、案例、下载中心和多语言展示页面。可以评估已有源码、数据库备份和图片附件，再决定恢复与生成方式。
+Company profiles, product catalogs, news, case studies, download centers, and multilingual informational pages are good candidates for assessment. Available source code, database backups, and media files determine the recovery and generation approach.
 
-登录、订单、支付、会员资料、实时库存等业务需要后端。此类项目先拆分展示页面与动态业务，再选择保留、迁移或重建后端。联系表单也必须连接真实接收端。
+Authentication, orders, payments, member data, and live inventory require a backend. Separate informational pages from dynamic business features, then decide whether to retain, migrate, or rebuild the backend. Contact forms also need a working receiving service.
 
-## 改造流程
+## Migration workflow
 
-1. 核对资料来源，确认正文、图片、附件和语言内容分别以哪份资料为准。
-2. 生成本地静态站，保留可核对的内容 ID、路由和视觉风格。
-3. 按需要实现本地编辑、翻译译稿、人工确认和版本备份。
-4. 检查公开目录，将管理资料、密钥和旧服务端程序留在非公开位置。
-5. 在已授权范围内备份、测试发布、切换入口，并准备回退。
-6. 验证真实域名、源站、内容版本、图片和关键交互，交付日常更新方法。
+1. Identify the authoritative source for text, images, attachments, and each language.
+2. Generate a local static website with traceable content IDs, routes, and visual styling.
+3. Implement local editing, translation drafts, human review, and versioned backups as needed.
+4. Check the public directory, keeping editing data, secrets, and legacy server code outside public access.
+5. Prepare backups, test publishing, traffic cutover, and rollback within the authorized scope.
+6. Verify the actual domain, origin, content version, images, and key interactions, then document routine updates.
 
-FTP 上传完成、主机启动、目录禁止执行脚本、代理放行和域名切换分别需要核对。带有 `preview` 的物理目录也可能已经承载正式官网。
+A completed FTP upload, a running host, disabled script execution, proxy access, and production routing each need separate verification. A physical directory named `preview` may already serve the production website.
 
-## 目录
+## Repository structure
 
 ```text
 skills/legacy-site-to-static/
-  SKILL.md                    工作流程与适用边界
-  agents/openai.yaml          可选的宿主界面元数据
-  assets/                     通用项目配置示例
-  references/                 恢复、管理、发布和检查说明
-  scripts/                    三个检查工具及共用模块
-tests/run_tests.py             使用合成资料的回归检查
-docs/wechat-article.md         公众号介绍正文
-docs/x-posts.txt               X 短帖和串文
+  SKILL.md                    Workflow and scope
+  agents/openai.yaml          Optional host UI metadata
+  assets/                     Generic project configuration example
+  references/                 Recovery, editing, publishing, and checking guides
+  scripts/                    Three checking tools and a shared module
+tests/run_tests.py             Regression checks using synthetic fixtures
+docs/wechat-article.md         WeChat introduction article in Chinese
+docs/x-posts.txt               X post and thread in Chinese
 ```
 
-## 单独运行检查工具
+## Run the checking tools directly
 
-脚本只依赖 Python 3.9 及以上的标准库。以下命令在仓库根目录运行，路径应替换为当前项目的实际位置，报告目录应位于原始资料和公开网站目录之外。
+The scripts require Python 3.9 or later and use only its standard library. Run these examples from the repository root, replace the paths with your project's locations, and keep reports outside both the source materials and public website directory.
 
 ```bash
-# 盘点目录或 ZIP 元数据，不执行旧程序，也不自动解压
+# Inventory directory or ZIP metadata without executing or extracting old code
 python3 skills/legacy-site-to-static/scripts/inventory_sources.py \
   /private/source /private/web-backup.zip \
   --out /private/reports/inventory.json
 
-# 检查待上传的公开目录，按当前项目填写策略
+# Check the public release using a policy configured for the current project
 python3 skills/legacy-site-to-static/scripts/check_release.py \
   /project/public --mode formal --policy /private/project.json \
   --out /private/reports/release.json
 
-# 检查明确指定的网址，不自动跟随跳转
+# Check explicitly specified URLs without automatically following redirects
 python3 skills/legacy-site-to-static/scripts/probe_routes.py \
   https://www.example.invalid/ \
   --out /private/reports/http.json
 ```
 
-完整选项见各脚本的 `--help` 和 [检查工具约定](skills/legacy-site-to-static/references/checks.md)。域名示例不可访问，需要替换。
+See each script's `--help` and the [checking tool guide](skills/legacy-site-to-static/references/checks.md), currently written in Chinese, for the full options. The example domain is intentionally nonfunctional and must be replaced.
 
-来源盘点工具不会解析 SQL 正文。发布检查会核对本地引用、大小写、文件清单、部分敏感文件特征，以及项目声明的内容规则；HTTP 工具核对响应状态和有限读取范围。这些检查不执行浏览器 JavaScript，也不替代正文核对、图片解码、实际业务验证或完整安全审计。
+The inventory tool does not parse SQL contents. The release checker examines local references, path casing, file manifests, selected sensitive-file patterns, and declared project rules. The HTTP tool checks response status and bounded reads. These tools do not execute browser JavaScript or replace content review, image decoding, business-function testing, or a full security audit.
 
-## 维护和验证
+## Maintenance and validation
 
 ```bash
 python3 -B tests/run_tests.py
 ```
 
-回归检查使用临时合成资料和本地 HTTP 服务。环境存在 `openssl` 时，还会验证不受信任的 HTTPS 证书被拒绝。原始版本已在 macOS 的 Python 3.9 上运行通过；Windows 运行环境仍需单独验证。
+Regression checks use temporary synthetic fixtures and local HTTP servers. When `openssl` is available, they also verify rejection of an untrusted HTTPS certificate. The original version passed on macOS with Python 3.9; Windows execution still requires separate validation.
 
-静态化减少了公开服务端程序的攻击面，主机、访问账号、前置代理和本地管理工具仍需要维护。恢复版本时使用已验证的静态发布包，避免重新启用存在风险的旧后台。
+Static delivery reduces exposure to public server-side code. Hosting, access accounts, proxies, and local management tools still need maintenance. Roll back using a verified static release instead of re-enabling an unsafe legacy backend.
 
-本仓库不含原项目源码、数据库、媒体文件、连接账号或部署地址。项目实际资料、完整编辑备份和检查报告请保存在仓库之外。
+This repository excludes the original project's source code, databases, media, access credentials, and deployment addresses. Keep actual project materials, complete editing backups, and checking reports outside this repository.
