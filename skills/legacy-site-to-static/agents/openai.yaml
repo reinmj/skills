@@ -1,0 +1,4 @@
+interface:
+  display_name: "老官网静态化改造"
+  short_description: "将老旧企业官网改造成可维护的静态站，涵盖内容恢复、本地管理和安全上线"
+  default_prompt: "使用 $legacy-site-to-static 评估这份老官网代码和备份，保留现有内容与风格，制作可维护的静态版本并准备发布方案。"

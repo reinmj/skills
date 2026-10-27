@@ -1,0 +1,42 @@
+{
+  "project_name": "Example catalogue migration",
+  "sources": [
+    {"role": "source_code", "path": "PRIVATE_SOURCE_PATH", "authoritative_for": ["layout", "schema"]},
+    {"role": "database_backup", "path": "PRIVATE_SQL_PATH", "authoritative_for": ["published_content"]},
+    {"role": "web_files_backup", "path": "PRIVATE_WEB_BACKUP_PATH", "authoritative_for": ["media", "downloads"]}
+  ],
+  "dynamic_features": [
+    {"name": "contact_form", "decision": "needs_current_project_decision", "backend_url": null}
+  ],
+  "paths": {"public": "./public", "private_content": "./private/content.json", "releases": "./private/releases"},
+  "deployment": {
+    "public_base_url": "https://www.example.invalid/",
+    "stage": "preview",
+    "remote_directory": null,
+    "directory_is_live": false,
+    "origin_address": null,
+    "proxy_config_path": null,
+    "preserved_platform_paths": [],
+    "nonpublic_archive_path": null,
+    "script_execution_policy_verified": false,
+    "credentials": "local-memory-only"
+  },
+  "validation": {
+    "required_pages": ["index.html"],
+    "indexable_pages": ["index.html"],
+    "require_indexing": true,
+    "data_file": "data/site.json",
+    "version_file": "version.json",
+    "expected_version": null,
+    "expected_counts": {},
+    "record_pages": [{"collection": "products", "id_field": "id", "pattern": "product-{id}.html"}],
+    "translation_count_field": "confirmedTranslations",
+    "previous_confirmed_translations": null,
+    "translation_decrease_accepted": false,
+    "reviewed_static_config": [],
+    "public_download_archives": [],
+    "allowed_post_form_actions": [],
+    "allowed_embed_urls": [],
+    "directory_index": "index.html"
+  }
+}
