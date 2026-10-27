@@ -1,31 +1,37 @@
 # 老官网静态化改造
 
-`legacy-site-to-static` 是一份 Codex Skill，用于把老旧企业展示站、产品目录站从 PHP、ASP 或旧 CMS 迁移成可维护的静态官网。
+简体中文 | [English](README.en.md)
+
+`legacy-site-to-static` 是一份面向 AI Agent 的 Skill，用于把老旧企业展示站、产品目录站从 PHP、ASP 或旧 CMS 迁移成可维护的静态官网。
 
 它把一次真实改造中用到的资料恢复、本地编辑、多语言、FTP 发布、入口切换和回退方法整理成工作流程，并附带三个只读检查工具。适合希望保留原有内容、风格和可用主机的项目。
 
-**管理工具、翻译接入和 FTP 发布器需要由 Codex 按当前项目实现。仓库提供工作流程和检查脚本，不包含通用可安装后台。**
+**管理工具、翻译接入和 FTP 发布器需要由 Agent 按当前项目实现。仓库提供工作流程和检查脚本，不包含通用可安装后台。**
+
+核心流程和检查脚本不依赖特定大模型 API。Agent 需要能够读取本地文件、按需运行脚本；自动发现、安装目录和调用语法由所用 Agent 工具决定。
 
 ## 安装和使用
 
-在 Codex 中输入：
+下载仓库，或克隆到本地：
 
-```text
-使用 $skill-installer，从 https://github.com/reinmj/skills
-安装 skills/legacy-site-to-static。
+```bash
+git clone https://github.com/reinmj/skills.git
 ```
 
-安装后输入：
+如果 Agent 支持导入 Skill，将完整的 `skills/legacy-site-to-static` 文件夹导入其支持的目录，保留内部文件结构。具体安装方式以该 Agent 工具的说明为准。
+
+也可以直接让 Agent 读取本地 `SKILL.md`。以下路径需替换为实际绝对路径：
 
 ```text
-用 $legacy-site-to-static 改造这个老官网。
+请读取 /path/to/skills/skills/legacy-site-to-static/SKILL.md，
+并按其中的流程改造这个老官网。
 源码在【源码位置】，数据库备份在【SQL 或压缩包位置】，
 图片和网页备份在【备份位置】。
 先只读评估，列出内容完整性、动态功能和部署链路，
 再制作本地可核对的静态版本，保留现有内容和风格。
 ```
 
-安装方式参见 [OpenAI 官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)。如果安装后没有出现该 skill，可重启 Codex 再查看。已有同名 skill 时先核对版本，避免重复安装。
+已有同名 Skill 时先核对版本，避免重复安装。远程上传和正式入口切换应遵循当前项目的授权范围。
 
 ## 适用范围
 
@@ -49,7 +55,7 @@ FTP 上传完成、主机启动、目录禁止执行脚本、代理放行和域�
 ```text
 skills/legacy-site-to-static/
   SKILL.md                    工作流程与适用边界
-  agents/openai.yaml          Codex 展示信息
+  agents/openai.yaml          可选的宿主界面元数据
   assets/                     通用项目配置示例
   references/                 恢复、管理、发布和检查说明
   scripts/                    三个检查工具及共用模块
