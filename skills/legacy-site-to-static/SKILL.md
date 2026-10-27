@@ -1,6 +1,11 @@
 ---
 name: legacy-site-to-static
+version: "1.0.0"
+display_name: "老官网静态化改造"
+display_name_en: "Legacy Website to Static"
 description: "把老旧企业展示站、产品目录站从 PHP、ASP 或旧 CMS 迁移成可维护的静态官网，恢复原内容与图片，交付本地编辑、发布和域名切换方案。用于旧官网静态化改造、安全重开或替换失修后台；保留交易、登录等动态业务的独立处理边界。"
+description_zh: "把老旧企业展示站、产品目录站从 PHP、ASP 或旧 CMS 迁移成可维护的静态官网，恢复原内容与图片，交付本地编辑、发布和域名切换方案。用于旧官网静态化改造、安全重开或替换失修后台；保留交易、登录等动态业务的独立处理边界。"
+description_en: "Migrate aging corporate websites and product catalogs from PHP, ASP, or legacy CMS platforms to maintainable static sites. Recover content and media, and prepare local editing, publishing, and traffic cutover. Use for legacy-site modernization or reopening; handle login, orders, and payments separately."
 ---
 
 # 老官网静态化改造
