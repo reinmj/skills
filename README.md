@@ -10,6 +10,8 @@ It brings together content recovery, local editing, multilingual content, FTP pu
 
 The core workflow and scripts do not depend on a particular model API. The Agent needs access to local files and the ability to run scripts when needed. Skill discovery, installation directories, and invocation syntax depend on the Agent tool you use.
 
+**Keep original backups read-only. Before extraction, SQL parsing, recovery, or editing, create and verify an independent working copy in a separate private workspace. Keep generated files and reports outside the original source paths. Metadata-only inspection may read originals directly.**
+
 ## Installation and usage
 
 Download the repository or clone it locally:
@@ -30,6 +32,8 @@ Database backup: [SQL file or archive location].
 Images and web files: [backup location].
 Start with a read-only assessment of content completeness,
 dynamic features, and the deployment chain.
+Keep the originals read-only. Before recovery or editing,
+create and verify an independent working copy.
 Then build a locally reviewable static version,
 preserving the existing content and visual style.
 ```
@@ -45,7 +49,7 @@ Authentication, orders, payments, member data, and live inventory require a back
 ## Migration workflow
 
 1. Identify the authoritative source for text, images, attachments, and each language.
-2. Generate a local static website with traceable content IDs, routes, and visual styling.
+2. Create and verify independent working copies, then generate a local static website into a new output directory with traceable content IDs, routes, and visual styling.
 3. Implement local editing, translation drafts, human review, and versioned backups as needed.
 4. Check the public directory, keeping editing data, secrets, and legacy server code outside public access.
 5. Prepare backups, test publishing, traffic cutover, and rollback within the authorized scope.

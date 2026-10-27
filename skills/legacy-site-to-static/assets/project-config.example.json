@@ -1,10 +1,18 @@
 {
   "project_name": "Example catalogue migration",
   "sources": [
-    {"role": "source_code", "path": "PRIVATE_SOURCE_PATH", "authoritative_for": ["layout", "schema"]},
-    {"role": "database_backup", "path": "PRIVATE_SQL_PATH", "authoritative_for": ["published_content"]},
-    {"role": "web_files_backup", "path": "PRIVATE_WEB_BACKUP_PATH", "authoritative_for": ["media", "downloads"]}
+    {"role": "source_code", "path": "PRIVATE_SOURCE_PATH", "working_copy": "./work/run-ID/sources/code", "authoritative_for": ["layout", "schema"]},
+    {"role": "database_backup", "path": "PRIVATE_SQL_PATH", "working_copy": "./work/run-ID/sources/database.sql.gz", "authoritative_for": ["published_content"]},
+    {"role": "web_files_backup", "path": "PRIVATE_WEB_BACKUP_PATH", "working_copy": "./work/run-ID/sources/web-backup.zip", "authoritative_for": ["media", "downloads"]}
   ],
+  "source_protection": {
+    "originals_read_only": true,
+    "working_copy_required": true,
+    "workspace_root": "./work/run-ID",
+    "source_manifest": "./private/source-manifest.json",
+    "copies_verified": false,
+    "originals_rechecked_after_work": false
+  },
   "dynamic_features": [
     {"name": "contact_form", "decision": "needs_current_project_decision", "backend_url": null}
   ],
